@@ -1,3 +1,8 @@
+#' Generate spatial weights matrix for a grid
+#' @export
+sim_grid_listw <- function(nrow, ncol, style = "W") {
+  spdep::nb2listw(spdep::cell2nb(nrow, ncol, "queen"), style = style)
+}
 # Helper function to generate data
 #' @export
 make_grid <- function(ncol, nrow = ncol) {
@@ -330,7 +335,7 @@ sim_sar <- function(u, xb, listw, rho = 0.5) {
     rlang::abort("`u`, `xb`, and `listw` must have the same number of features")
   }
   y1 <- xb + u
-  inverse_prod(listw, y1, rho)
+  as.numeric(inverse_prod(listw, y1, rho))
 }
 
 #' Simulate the Spatial Durbin Model
@@ -412,6 +417,7 @@ sim_gns <- function(u, xb, wxg, listw, rho = 0.5, lambda = 0.2, model = c("sar",
 }
 
 #' Simiulate Matrix Exponential Spatial Lag Model
+#' @importFrom spatialreg as_dgRMatrix_listw 
 #' @export
 #' @referece [`dgp_mess`](https://pysal.org/spreg/_modules/spreg/dgp.html#dgp_mess)
 sim_mess <- function(u, xb, listw, rho = 0.5) {
