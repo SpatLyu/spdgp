@@ -32,7 +32,7 @@ if (!requireNamespace("pak")) {
     install.packages("pak")
 }
 
-pak::pak("josiahparry/spgdp")
+pak::pak("josiahparry/spdgp")
 ```
 
 ## Basic usage:
