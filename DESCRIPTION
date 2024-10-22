@@ -15,6 +15,7 @@ Imports:
     Matrix,
     rlang,
     sf,
+    smoothmest,
     spatialreg,
     spdep,
     vctrs

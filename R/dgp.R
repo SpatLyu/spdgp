@@ -1,18 +1,51 @@
 #' Generate spatial weights matrix for a grid
+#' 
+#' Create a spatial weights matrix based on a square grid structure.
+#' 
+#' @param nrow the number of rows in the grid.
+#' @param ncol defaults to `nrow`. The number columns in the grid.
+#' @param style the spatial weights style. Defaults to row standardized. See [spdep::nb2listw()] for more.
+#' @param type default `"queen"`. Can also be `"rook"`.
 #' @export
-sim_grid_listw <- function(nrow, ncol, style = "W") {
-  spdep::nb2listw(spdep::cell2nb(nrow, ncol, "queen"), style = style)
-}
-# Helper function to generate data
-#' @export
-make_grid <- function(ncol, nrow = ncol) {
-  sf::st_make_grid(cellsize = c(1, 1), offset = c(0, 0), n = c(ncol, nrow))
+#' @examples
+#' sim_grid_listw(10, 5)
+sim_grid_listw <- function(nrow, ncol = ncol, style = "W", type = c("queen", "rook")) {
+  check_number_whole(nrow)
+  check_number_whole(ncol)
+  type <- rlang::arg_match(type)
+  spdep::nb2listw(spdep::cell2nb(nrow, ncol, type), style = style)
 }
 
-# grid <- make_grid(5)
-# listw <- spdep::nb2listw(spdep::poly2nb(grid))
-# n = 25
+#' Create a square grid
+#' 
+#' Creates a square grid with `ncol` and `nrow` dimensions.
+#' 
+#' @inheritParams sim_grid_list
+#' @export
+#' @examples
+#' make_square_grid(3, 2)
+make_square_grid <- function(nrow, ncol = nrow) {
+  sf::st_make_grid(
+    cellsize = c(1, 1),
+    offset = c(0, 0),
+    n = c(ncol, nrow)
+  )
+}
 
+#' Simulate an error term
+#' 
+#' @param n the number of values to simulate
+#' @param mu the sample average.
+#' @param var the sample variance. The `sqrt(var)` is passed to `rnorm()` and `rlnorm()` for normal and laplace distributions. `sqrt(var / 2)` is used for `laplace()`
+#' @param method must be one of `"normal"`, `"laplace"`, `"cauchy"`, or `"lognormal"`.
+#' 
+#' @details
+#' 
+#' - `"normal"`: fit with `rnorm()`
+#' - `"laplace"`: fit with `smoothmest::rdoublex()`
+#' - `"cauchy"`: fit with `rcauchy()`
+#' - `"lognormal"`: fit with `rlnorm()`
+#' 
 #' @export
 make_error <- function(
     n = 10,
@@ -31,7 +64,9 @@ make_error <- function(
   )
 }
 
-
+#' @param cor correlation between bivariate normal
+#' @inheritParams make_error
+#' @rdname make_x
 #' @export
 make_x_bivariate <- function(n = 5, mu = 1, cor = 0.25, var = c(1, 1)) {
   # check the length of mu
@@ -61,6 +96,7 @@ make_x_bivariate <- function(n = 5, mu = 1, cor = 0.25, var = c(1, 1)) {
 }
 
 
+#' @rdname make_x
 #' @export
 make_x_uniform <- function(n = 5, var = 1) {
   check_number_decimal(var)
@@ -68,7 +104,7 @@ make_x_uniform <- function(n = 5, var = 1) {
   runif(n, 0, sqrt(12 * var))
 }
 
-
+#' @rdname make_x
 #' @export
 make_x_normal <- function(n = 5, mu = 0, var = 1) {
   check_number_decimal(var)
@@ -77,8 +113,15 @@ make_x_normal <- function(n = 5, mu = 0, var = 1) {
   rnorm(n, mu, var)
 }
 
-
+#' Simulate X variables
+#' 
+#' Simulates independent variables. 
+#' 
+#' @param method must be one of `"uniform"` (default), `"normal"`, or `"bivnormal"` (bivariate normal)
+#' @rdname make_x
 #' @export
+#' @examples
+#' make_x(10, mu = c(0.5, 1.2), var = c(1, 0.5)) 
 make_x <- function(n = 5, mu = 0, var = 1, cor = 0, method = c("uniform", "normal", "bivnormal")) {
   check_number_whole(n)
 
@@ -123,8 +166,17 @@ make_x <- function(n = 5, mu = 0, var = 1, cor = 0, method = c("uniform", "norma
   res
 }
 
+#' Create Spatial Lags of variables
+#' 
+#' Given a dataframe of numeric values and a spatial weights matrix, calculate the spatial lag of each variable.
+#' 
 #' @param order unused. 
 #' @export
+#' @exampls
+#' listw <- sim_grid_listw(10, 10)
+#' x_vars <- make_x(100, mu = c(0.5, 1.2), var = c(1, 0.5)) 
+#' res <- make_wx(x_vars, listw)
+#' head(res)
 make_wx <- function(x, listw, order = NULL) {
   lagged <- lapply(x, function(.x) spdep::lag.listw(listw, .x))
   names(lagged) <- paste0(names(lagged), "_lag")

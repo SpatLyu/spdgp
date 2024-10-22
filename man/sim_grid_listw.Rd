@@ -4,8 +4,20 @@
 \alias{sim_grid_listw}
 \title{Generate spatial weights matrix for a grid}
 \usage{
-sim_grid_listw(nrow, ncol, style = "W")
+sim_grid_listw(nrow, ncol = ncol, style = "W", type = c("queen", "rook"))
+}
+\arguments{
+\item{nrow}{the number of rows in the grid.}
+
+\item{ncol}{defaults to \code{nrow}. The number columns in the grid.}
+
+\item{style}{the spatial weights style. Defaults to row standardized. See \code{\link[spdep:nb2listw]{spdep::nb2listw()}} for more.}
+
+\item{type}{default \code{"queen"}. Can also be \code{"rook"}.}
 }
 \description{
-Generate spatial weights matrix for a grid
+Create a spatial weights matrix based on a square grid structure.
+}
+\examples{
+sim_grid_listw(10, 5)
 }
