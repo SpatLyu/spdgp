@@ -58,9 +58,14 @@ x <- make_x(n, method = "uniform")
 
 # create x's according to an intercept and beta value
 x_beta <- make_xb(x, c(1, 5))
+```
 
+Next, we’ll simulate the y and specify the autoregrssive parameter
+$\rho = 0.5$.
+
+``` r
 # simulate y from error and the x_beta
-y <- sim_sar(u, x_beta, listw)
+y <- sim_sar(u, x_beta, listw, rho = 0.5)
 ```
 
 Fit an SAR model using simulated data.
@@ -73,28 +78,31 @@ sar_mod <- lagsarlm(y ~ x$x_1, listw = listw)
 summary(sar_mod)
 ```
 
+    #> 
+    #> Call:lagsarlm(formula = y ~ x$x_1, listw = listw)
+    #> 
+    #> Residuals:
+    #>       Min        1Q    Median        3Q       Max 
+    #> -3.100635 -0.377549  0.042234  0.703459  2.810884 
+    #> 
+    #> Type: lag 
+    #> Coefficients: (asymptotic standard errors) 
+    #>             Estimate Std. Error z value Pr(>|z|)
+    #> (Intercept)  0.49641    0.97505  0.5091   0.6107
+    #> x$x_1        4.98587    0.19082 26.1281   <2e-16
+    #> 
+    #> Rho: 0.52947, LR test value: 54.755, p-value: 1.3656e-13
+    #> Asymptotic standard error: 0.050408
+    #>     z-value: 10.504, p-value: < 2.22e-16
+    #> Wald statistic: 110.33, p-value: < 2.22e-16
+    #> 
+    #> Log likelihood: -83.83562 for lag model
+    #> ML residual variance (sigma squared): 1.5825, (sigma: 1.258)
+    #> Number of observations: 50 
+    #> Number of parameters estimated: 4 
+    #> AIC: 175.67, (AIC for lm: 228.43)
+    #> LM test for residual autocorrelation
+    #> test value: 1.8893, p-value: 0.16928
 
-    Call:lagsarlm(formula = y ~ x$x_1, listw = listw)
-
-    Residuals:
-          Min        1Q    Median        3Q       Max 
-    -2.756735 -0.617262  0.058604  0.642419  1.916998 
-
-    Type: lag 
-    Coefficients: (asymptotic standard errors) 
-                Estimate Std. Error z value Pr(>|z|)
-    (Intercept) -0.92650    1.29918 -0.7131   0.4758
-    x$x_1        5.06428    0.15051 33.6475   <2e-16
-
-    Rho: 0.57344, LR test value: 52.782, p-value: 3.7259e-13
-    Asymptotic standard error: 0.057748
-        z-value: 9.9301, p-value: < 2.22e-16
-    Wald statistic: 98.607, p-value: < 2.22e-16
-
-    Log likelihood: -70.13125 for lag model
-    ML residual variance (sigma squared): 0.90401, (sigma: 0.9508)
-    Number of observations: 50 
-    Number of parameters estimated: 4 
-    AIC: 148.26, (AIC for lm: 199.05)
-    LM test for residual autocorrelation
-    test value: 1.5878, p-value: 0.20764
+In the model we can see that the estimate of `rho` is quite close to the
+specified value of `0.5`.

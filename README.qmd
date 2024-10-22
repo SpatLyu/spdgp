@@ -3,6 +3,11 @@ title: Spatial Data Generation Processes
 format: gfm
 ---
 
+```{r include = FALSE}
+knitr::opts_chunk$set(comment = "#>")
+suppressPackageStartupMessages(library(spatialreg))
+```
+
 `{spdgp}` is an R port of the [`pysal`](https://pysal.org/) module [`dgp`](https://pysal.org/spreg/api.html#dgp) within [`spreg`](https://pysal.org/spreg) library. 
 
 `spdgp` is designed around the [`spdep`](https://r-spatial.github.io/spdep/) package's `listw` object for representing spatial weights matrices. 
@@ -56,10 +61,13 @@ x <- make_x(n, method = "uniform")
 
 # create x's according to an intercept and beta value
 x_beta <- make_xb(x, c(1, 5))
+```
 
+Next, we'll simulate the y and specify the autoregrssive parameter $\rho = 0.5$.
+
+```{r}
 # simulate y from error and the x_beta
-y <- sim_sar(u, x_beta, listw)
-
+y <- sim_sar(u, x_beta, listw, rho = 0.5)
 ```
 
 Fit an SAR model using simulated data.
@@ -71,3 +79,6 @@ sar_mod <- lagsarlm(y ~ x$x_1, listw = listw)
 
 summary(sar_mod)
 ```
+
+In the model we can see that the estimate of `rho` is quite close to the specified value of `0.5`.
+
