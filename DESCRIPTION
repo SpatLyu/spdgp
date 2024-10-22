@@ -18,3 +18,4 @@ Imports:
     spatialreg,
     spdep,
     vctrs
+URL: https://josiahparry.github.io/spdgp/
