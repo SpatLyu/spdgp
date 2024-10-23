@@ -12,7 +12,7 @@ sim_ols(u, xb)
 \item{xb}{predicted x values as calculated by \code{make_xb()}}
 }
 \description{
-Simulate OLS
+Simulate a y variable for an Ordinary Least Squares (OLS) regression.
 }
 \examples{
 u <- make_error(50, method = "normal")

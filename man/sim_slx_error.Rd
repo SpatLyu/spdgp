@@ -6,6 +6,17 @@
 \usage{
 sim_slx_error(u, xb, wxg, lambda = 0.5, model = c("sar", "ma"))
 }
+\arguments{
+\item{u}{an error vector}
+
+\item{xb}{predicted x values as calculated by \code{make_xb()}}
+
+\item{wxg}{predicted spatial lag effect as calculated by \code{make_wxg()}}
+
+\item{lambda}{a value value between -1 and 1. The spatial autoregressive coefficient for the error term.}
+
+\item{model}{default \code{"sar"}. Which model should be simulated. Provide \code{"ma"} for the moving average.}
+}
 \description{
 Simulate Spatially Lagged X Error Model
 }

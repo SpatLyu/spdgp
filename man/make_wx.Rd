@@ -15,3 +15,9 @@ A \code{data.frame} of the spatially lagged variables.
 \description{
 Given a dataframe of numeric values and a spatial weights matrix, calculate the spatial lag of each variable.
 }
+\examples{
+listw <- sim_grid_listw(10, 10)
+x_vars <- make_x(100, mu = c(0.5, 1.2), var = c(1, 0.5)) 
+res <- make_wx(x_vars, listw)
+head(res)
+}

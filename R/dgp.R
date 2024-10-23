@@ -20,7 +20,7 @@ sim_grid_listw <- function(nrow, ncol = nrow, style = "W", type = c("queen", "ro
 #' 
 #' Creates a square grid with `ncol` and `nrow` dimensions.
 #' 
-#' @inheritParams sim_grid_list
+#' @inheritParams sim_grid_listw
 #' @export
 #' @examples
 #' make_square_grid(3, 2)
@@ -60,7 +60,8 @@ make_error <- function(
     "normal" = rnorm(n, mu, sqrt(var)),
     "laplace" = smoothmest::rdoublex(n, mu, sqrt(var / 2)),
     "cauchy" = rcauchy(n),
-    "lognormal" = rlnorm(n, mu, sqrt(var))
+    "lognormal" = rlnorm(n, mu, sqrt(var)),
+    stop("method not supported")
   )
 }
 
@@ -176,7 +177,7 @@ make_x <- function(n = 5, mu = 0, var = 1, cor = 0, method = c("uniform", "norma
 #' 
 #' @param order unused. 
 #' @export
-#' @exampls
+#' @examples
 #' listw <- sim_grid_listw(10, 10)
 #' x_vars <- make_x(100, mu = c(0.5, 1.2), var = c(1, 0.5)) 
 #' res <- make_wx(x_vars, listw)
@@ -267,14 +268,6 @@ inverse_prod <- function(listw, x, scalar) {
   Matrix::solve(Matrix::Diagonal(n) - scalar * w, as.matrix(x))
 }
 
-
-
-# n <- 100
-# grid <- make_grid(n)
-# listw <- spdep::nb2listw(spdep::poly2nb(grid))
-# u <- make_x(n^2, mu = c(0.5, 0.1), var = rep(1, 2), method = "normal")
-# dgp_errorproc(u, listw)
-
 #' Simulate Spatial Error Process
 #' 
 #' This function generates a pure spatial error process, which is useful when 
@@ -320,6 +313,8 @@ sim_error <- function(u, listw, lambda = 0.5, model = c("sar", "ma")) {
 
 #' Simulate OLS
 #' 
+#' Simulate a y variable for an Ordinary Least Squares (OLS) regression.
+#' 
 #' @examples
 #' u <- make_error(50, method = "normal")
 #' x <- make_x(50)
@@ -339,7 +334,6 @@ sim_ols <- function(u, xb) {
   # Compute y as the sum of xb and u
   as.numeric((xb + u)[[1]])
 }
-
 
 #' Simulate Spatially Lagged X (SLX) model
 #' 
@@ -378,8 +372,34 @@ sim_slx <- function(u, xb, wxg) {
 
 #' Simulate Spatial Error Model (SEM)
 #' 
+#' Simulate the y values for an SEM model.
+#' 
 #' @references [`spreg.dgp.dgp_sperror`](https://pysal.org/spreg/generated/spreg.dgp.dgp_sperror.html#spreg.dgp.dgp_sperror)
 #' @export
+#' @inheritParams sim_error 
+#' @inheritParams sim_slx
+#' @examples
+#' ncol <- 10
+#' n <- ncol^2
+#' listw <- sim_grid_listw(ncol, ncol)  # Create spatial weights for a grid
+#' u <- make_error(n)  # Simulate random errors
+#' x <- make_x(
+#'   n,
+#'   mu = c(0.25, 5),
+#'   var = c(1, 0.75),
+#'   method = "normal"
+#' )  # Generate x variables
+#' 
+#' # create xb with intercept = 1, beta1 = 2, beta2 = -3
+#' xb <- make_xb(x, c(1, 2, -3))
+#' y <- sim_sem(u, xb, listw)
+#' 
+#' # combine data 
+#' df <- cbind(y = y, x)
+#' 
+#' # fit SEM model
+#' # Note lambda, x_1, and x_2 estimates.
+#' spatialreg::errorsarlm(y ~ ., df, listw)
 sim_sem <- function(u, xb, listw, lambda = 0.5, model = c("sar", "ma")) {
   n_lw <- length(listw$neighbours)
   n_u <- vctrs::vec_size(u)
@@ -404,6 +424,8 @@ sim_sem <- function(u, xb, listw, lambda = 0.5, model = c("sar", "ma")) {
 #' Simulate Spatially Lagged X Error Model
 #' @references [`spreg.dgp.dgp_slxerror`](https://pysal.org/spreg/generated/spreg.dgp.dgp_slxerror.html#spreg.dgp.dgp_slxerror)
 #' @export
+#' @inheritParams sim_sem
+#' @inheritParams sim_slx
 sim_slx_error <- function(u, xb, wxg, lambda = 0.5, model = c("sar", "ma")) {
   n_lw <- length(listw$neighbours)
   n_u <- vctrs::vec_size(u)
@@ -425,8 +447,34 @@ sim_slx_error <- function(u, xb, wxg, lambda = 0.5, model = c("sar", "ma")) {
 }
 
 #' Simulate Spatial Lag Model (SAR)
+#' 
+#' Simulate y for a SAR model. 
+#' 
+#' @inheritParams sim_slx
+#' @param rho the spatial autoregressive coefficient for the spatially lagged dependent variable.
 #' @references [`spreg.dgp.dgp_lag`](https://pysal.org/spreg/generated/spreg.dgp.dgp_lag.html#spreg.dgp.dgp_lag)
 #' @export
+#' ncol <- 20
+#' n <- ncol^2
+#' listw <- sim_grid_listw(ncol, ncol)  # Create spatial weights for a grid
+#' u <- make_error(n)  # Simulate random errors
+#' x <- make_x(
+#'   n,
+#'   mu = c(0.25, 5),
+#'   var = c(1, 0.75),
+#'   method = "normal"
+#' )  # Generate x variables
+#' 
+#' # create xb with intercept = 1, beta1 = 2, beta2 = -3
+#' xb <- make_xb(x, c(1, 2, -3))
+#' y <- sim_sar(u, xb, listw)
+#' 
+#' # combine data 
+#' df <- cbind(y = y, x)
+#' 
+#' # fit SAR model
+#' # Note lambda, x_1, and x_2 estimates.
+#' spatialreg::stsls(y ~ ., df, listw)
 sim_sar <- function(u, xb, listw, rho = 0.5) {
   n_lw <- length(listw$neighbours)
   n_u <- vctrs::vec_size(u)
@@ -444,6 +492,28 @@ sim_sar <- function(u, xb, listw, rho = 0.5) {
 #' 
 #' @references [`spreg.dgp.dgp_spdurbin`](https://pysal.org/spreg/generated/spreg.dgp.dgp_spdurbin.html#spreg.dgp.dgp_spdurbin)
 #' @export
+#' ncol <- 20
+#' n <- ncol^2
+#' listw <- sim_grid_listw(ncol, ncol)  # Create spatial weights for a grid
+#' u <- make_error(n)  # Simulate random errors
+#' x <- make_x(
+#'   n,
+#'   mu = c(0.25, 5),
+#'   var = c(1, 0.75),
+#'   method = "normal"
+#' )  # Generate x variables
+#' 
+#' # create xb with intercept = 1, beta1 = 2, beta2 = -3
+#' xb <- make_xb(x, c(1, 2, -3))
+#' wx <- make_wx(x, listw)
+#' wxg <- make_wxg(wx, c(-2, 1.5))
+#' y <- sim_durbin(u, xb, wxg, listw, rho = 0.5)
+#' 
+#' # combine data 
+#' df <- cbind(y = y, x)
+#' 
+#' # fit SDM
+#' spatialreg::lagsarlm(y ~ ., df, listw, Durbin = TRUE)
 sim_durbin <- function(u, xb, wxg, listw, rho = 0.5) {
   n_lw <- length(listw$neighbours)
   n_u <- vctrs::vec_size(u)
@@ -455,7 +525,7 @@ sim_durbin <- function(u, xb, wxg, listw, rho = 0.5) {
     rlang::abort("`u`, `xb`, `wxg`, and `listw` must have the same number of features")
   }
   y1 <- xb + wxg + u
-  inverse_prod(listw, y1, rho)
+  as.numeric(inverse_prod(listw, y1, rho))
 }
 
 #' Simulate the Spatial Autoregressive Model with Autoregressive Errors 
@@ -463,6 +533,8 @@ sim_durbin <- function(u, xb, wxg, listw, rho = 0.5) {
 #' Generate `y` values for the "combo" / SARAR / SAC model. 
 #' @references [`spreg.dgp.dgp_lagerr`](https://pysal.org/spreg/generated/spreg.dgp.dgp_lagerr.html#spreg.dgp.dgp_lagerr)
 #' @export
+#' @inheritParams sim_sem
+#' @inheritParams sim_sar
 sim_sarar <- function(u, xb, listw, rho = 0.5, lambda = 0.2, model = c("sar", "ma")) {
   n_lw <- length(listw$neighbours)
   n_u <- vctrs::vec_size(u)
@@ -521,7 +593,7 @@ sim_gns <- function(u, xb, wxg, listw, rho = 0.5, lambda = 0.2, model = c("sar",
 #' Simiulate Matrix Exponential Spatial Lag Model
 #' @importFrom spatialreg as_dgRMatrix_listw 
 #' @export
-#' @referece [`dgp_mess`](https://pysal.org/spreg/_modules/spreg/dgp.html#dgp_mess)
+#' @references [`dgp_mess`](https://pysal.org/spreg/_modules/spreg/dgp.html#dgp_mess)
 sim_mess <- function(u, xb, listw, rho = 0.5) {
   n_lw <- length(listw$neighbours)
   n_u <- vctrs::vec_size(u)

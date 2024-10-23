@@ -6,8 +6,15 @@
 \usage{
 sim_sar(u, xb, listw, rho = 0.5)
 }
+\arguments{
+\item{u}{an error vector}
+
+\item{xb}{predicted x values as calculated by \code{make_xb()}}
+
+\item{rho}{the spatial autoregressive coefficient for the spatially lagged dependent variable.}
+}
 \description{
-Simulate Spatial Lag Model (SAR)
+Simulate y for a SAR model.
 }
 \references{
 \href{https://pysal.org/spreg/generated/spreg.dgp.dgp_lag.html#spreg.dgp.dgp_lag}{\code{spreg.dgp.dgp_lag}}

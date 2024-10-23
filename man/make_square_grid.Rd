@@ -6,6 +6,11 @@
 \usage{
 make_square_grid(nrow, ncol = nrow)
 }
+\arguments{
+\item{nrow}{the number of rows in the grid.}
+
+\item{ncol}{defaults to \code{nrow}. The number columns in the grid.}
+}
 \description{
 Creates a square grid with \code{ncol} and \code{nrow} dimensions.
 }

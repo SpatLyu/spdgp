@@ -9,3 +9,6 @@ sim_mess(u, xb, listw, rho = 0.5)
 \description{
 Simiulate Matrix Exponential Spatial Lag Model
 }
+\references{
+\href{https://pysal.org/spreg/_modules/spreg/dgp.html#dgp_mess}{\code{dgp_mess}}
+}

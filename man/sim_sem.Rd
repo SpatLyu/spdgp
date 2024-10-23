@@ -6,8 +6,40 @@
 \usage{
 sim_sem(u, xb, listw, lambda = 0.5, model = c("sar", "ma"))
 }
+\arguments{
+\item{u}{an error vector}
+
+\item{xb}{predicted x values as calculated by \code{make_xb()}}
+
+\item{lambda}{a value value between -1 and 1. The spatial autoregressive coefficient for the error term.}
+
+\item{model}{default \code{"sar"}. Which model should be simulated. Provide \code{"ma"} for the moving average.}
+}
 \description{
-Simulate Spatial Error Model (SEM)
+Simulate the y values for an SEM model.
+}
+\examples{
+ncol <- 10
+n <- ncol^2
+listw <- sim_grid_listw(ncol, ncol)  # Create spatial weights for a grid
+u <- make_error(n)  # Simulate random errors
+x <- make_x(
+  n,
+  mu = c(0.25, 5),
+  var = c(1, 0.75),
+  method = "normal"
+)  # Generate x variables
+
+# create xb with intercept = 1, beta1 = 2, beta2 = -3
+xb <- make_xb(x, c(1, 2, -3))
+y <- sim_sem(u, xb, listw)
+
+# combine data 
+df <- cbind(y = y, x)
+
+# fit SEM model
+# Note lambda, x_1, and x_2 estimates.
+spatialreg::errorsarlm(y ~ ., df, listw)
 }
 \references{
 \href{https://pysal.org/spreg/generated/spreg.dgp.dgp_sperror.html#spreg.dgp.dgp_sperror}{\code{spreg.dgp.dgp_sperror}}
