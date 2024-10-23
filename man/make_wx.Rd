@@ -9,6 +9,9 @@ make_wx(x, listw, order = NULL)
 \arguments{
 \item{order}{unused.}
 }
+\value{
+A \code{data.frame} of the spatially lagged variables.
+}
 \description{
 Given a dataframe of numeric values and a spatial weights matrix, calculate the spatial lag of each variable.
 }

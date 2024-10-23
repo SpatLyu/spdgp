@@ -9,7 +9,7 @@
 #' @export
 #' @examples
 #' sim_grid_listw(10, 5)
-sim_grid_listw <- function(nrow, ncol = ncol, style = "W", type = c("queen", "rook")) {
+sim_grid_listw <- function(nrow, ncol = nrow, style = "W", type = c("queen", "rook")) {
   check_number_whole(nrow)
   check_number_whole(ncol)
   type <- rlang::arg_match(type)
@@ -92,7 +92,7 @@ make_x_bivariate <- function(n = 5, mu = 1, cor = 0.25, var = c(1, 1)) {
     byrow = TRUE,
     ncol = 2
   )
-  MASS::mvrnorm(10, mu, mcov)
+  MASS::mvrnorm(n, mu, mcov)
 }
 
 
@@ -170,6 +170,10 @@ make_x <- function(n = 5, mu = 0, var = 1, cor = 0, method = c("uniform", "norma
 #' 
 #' Given a dataframe of numeric values and a spatial weights matrix, calculate the spatial lag of each variable.
 #' 
+#' @returns 
+#' 
+#' A `data.frame` of the spatially lagged variables.
+#' 
 #' @param order unused. 
 #' @export
 #' @exampls
@@ -180,15 +184,25 @@ make_x <- function(n = 5, mu = 0, var = 1, cor = 0, method = c("uniform", "norma
 make_wx <- function(x, listw, order = NULL) {
   lagged <- lapply(x, function(.x) spdep::lag.listw(listw, .x))
   names(lagged) <- paste0(names(lagged), "_lag")
-  cbind(x, data.frame(lagged))
+  data.frame(lagged)
 }
 
+
+#' Calculate predicted X values based on coefficients
+#' 
+#' This function calculates predicted x values based on regression coefficients.
+#' The results of this function can be passed to other `sim_*()` functions. 
+#' 
+#' @param x a data frame of x variables generated with `make_x()`
+#' @param beta a vector of the beta coefficients for each of the variables. There must be `ncol(x) + 1` values. The first element of the vector is the intercept.
+#' 
 #' @examples
-#' grid <- make_grid(5)
-#' listw <- spdep::nb2listw(spdep::poly2nb(grid))
+#' grid <- make_square_grid(5)
+#' listw <- sim_grid_listw(5, 5)
 #' n <- 25
 #' x <- make_x(25, c(0,1), c(1,4))
-#' betas <- runif(3, max = 2)
+#' 
+#' betas <- c(1, 1.5, -2)
 #' make_xb(x, betas)
 #' @export
 make_xb <- function(x, beta) {
@@ -206,14 +220,27 @@ make_xb <- function(x, beta) {
 }
 
 
+
+
+#' Calculate the effect of spatially lagged X variables
+#' 
+#' This function computes the contribution of spatially lagged X variables based on 
+#' provided coefficients. The function takes the spatially lagged variables (`wx`, see [make_wx()])
+#' and multiplies them by their corresponding regression coefficients (`gamma`), returning
+#' the predicted influence of the spatial lags. Only spatial lags are considered; 
+#' the original X variables are not included in this calculation.
+#'
+#' @param wx a matrix of spatially lagged x variables.
+#' @param gamma a vector of coefficients for the spatially lagged x variables. Its length must match the number of columns in wx.
+#' 
 #' @examples
-# grid <- make_grid(5)
-# listw <- spdep::nb2listw(spdep::poly2nb(grid))
-# n <- 25
-# x <- make_x(25, c(0,1), c(1,4))
-# wx <- make_wx(x, listw)
-# gamma <- runif(4, max = 2)
-# make_wxg(wx, gamma) 
+#' grid <- make_square_grid(5)
+#' listw <- spdep::nb2listw(spdep::poly2nb(grid))
+#' n <- 25
+#' x <- make_x(25, c(0,1), c(1,4))
+#' wx <- make_wx(x, listw)
+#' gamma <- c(1.75, 0.4)
+#' make_wxg(wx, gamma) 
 #' @export
 make_wxg <- function(wx, gamma) {
   wx <- as.matrix(wx)  # Convert wx to a matrix
@@ -248,10 +275,26 @@ inverse_prod <- function(listw, x, scalar) {
 # u <- make_x(n^2, mu = c(0.5, 0.1), var = rep(1, 2), method = "normal")
 # dgp_errorproc(u, listw)
 
-#' Simulate Spatial Error Model
+#' Simulate Spatial Error Process
+#' 
+#' This function generates a pure spatial error process, which is useful when 
+#' you only want to simulate the error structure without including any deterministic
+#' part (i.e., no xb term). This can be used to analyze or simulate the behavior
+#' of spatially dependent errors in isolation.
+#' 
+#' @inheritParams sim_slx
+#' @inheritParams make_wx
+#' @param lambda a value value between -1 and 1. The spatial autoregressive coefficient for the error term.
+#' @param model default `"sar"`. Which model should be simulated. Provide `"ma"` for the moving average.
 #' 
 #' @references See [`spreg.dgp.dgp_errproc`](https://pysal.org/spreg/generated/spreg.dgp.dgp_errproc.html#spreg.dgp.dgp_errproc)
+#' @export
+#' @examples
+#' listw <- sim_grid_listw(5) 
+#' u <- make_error(25)
+#' sim_error(u, listw)
 sim_error <- function(u, listw, lambda = 0.5, model = c("sar", "ma")) {
+  check_number_decimal(lambda, min = -1, max = 1)
   if (!rlang::is_bare_numeric(u)) {
     rlang::abort("`u` must be a numeric vector")
   }
@@ -278,14 +321,15 @@ sim_error <- function(u, listw, lambda = 0.5, model = c("sar", "ma")) {
 #' Simulate OLS
 #' 
 #' @examples
-#' u = make_x(50, method = "normal")
-#' x = make_x(50)
-#' xb = make_xb(x, c(1,2))
-#' y <- dgp_ols(u, xb)
-#' mod <- lm(y ~ x[[1]])
-#' summary(mod)
+#' u <- make_error(50, method = "normal")
+#' x <- make_x(50)
+#' xb <- make_xb(x, c(1,2))
+#' y <- sim_ols(u, xb)
+#' lm(y ~ x[[1]])
+#'
 #' @references [`spreg.dgp.dgp_ols`](https://pysal.org/spreg/generated/spreg.dgp.dgp_ols.html#spreg.dgp.dgp_ols)
 #' @export
+#' @inheritParams sim_slx
 sim_ols <- function(u, xb) {
   # Check if the lengths of u and xb are the same
   if (vctrs::vec_size(u) != vctrs::vec_size(xb)) {
@@ -299,18 +343,24 @@ sim_ols <- function(u, xb) {
 
 #' Simulate Spatially Lagged X (SLX) model
 #' 
+#' This function simulates the y values of an SLX model, where the dependent 
+#' variable is influenced by both the original and spatially lagged x variables. 
+#' 
+#' @param u an error vector 
+#' @param xb predicted x values as calculated by `make_xb()`
+#' @param wxg predicted spatial lag effect as calculated by `make_wxg()`
 #' @examples
-#' n <- 100
-#' grid <- make_grid(sqrt(n), sqrt(n))
-#' listw <- spdep::nb2listw(spdep::poly2nb(grid))
-#' u <- make_error(n, method = "normal")
-#' x <- make_x(n, method = "uniform")
-#' xb <- make_xb(x, c(1, 2))
-#' wx <- make_wx(x, listw)
-#' wxg <- make_wxg(wx, c(2, 2))
-#' y <- dgp_slx(u, xb, wxg)
+#' ncol <- 20
+#' n <- ncol^2
+#' listw <- sim_grid_listw(ncol, ncol)  # Create spatial weights for a grid
+#' u <- make_error(n, method = "normal")  # Simulate random errors
+#' x <- make_x(n, method = "uniform")  # Generate x variables
+#' xb <- make_xb(x, c(1, 2))  # Calculate xb using the original x and coefficients
+#' wx <- make_wx(x, listw)  # Generate spatially lagged x variables
+#' wxg <- make_wxg(wx, 0.5)  # Calculate the effect of the spatial lags
+#' y <- sim_slx(u, xb, wxg)  # Simulate the SLX model outcome
 #' df <- data.frame(y, x)
-#' spatialreg::lmSLX(y ~ ., data = df, listw = listw) 
+#' spatialreg::lmSLX(y ~ ., data = df, listw = listw)  # Estimate the SLX model
 #' @export
 #' @references [`spreg.dgp.dgp_slx`](https://pysal.org/spreg/generated/spreg.dgp.dgp_slx.html#spreg.dgp.dgp_slx)
 sim_slx <- function(u, xb, wxg) {

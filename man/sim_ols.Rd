@@ -6,16 +6,21 @@
 \usage{
 sim_ols(u, xb)
 }
+\arguments{
+\item{u}{an error vector}
+
+\item{xb}{predicted x values as calculated by \code{make_xb()}}
+}
 \description{
 Simulate OLS
 }
 \examples{
-u = make_x(50, method = "normal")
-x = make_x(50)
-xb = make_xb(x, c(1,2))
-y <- dgp_ols(u, xb)
-mod <- lm(y ~ x[[1]])
-summary(mod)
+u <- make_error(50, method = "normal")
+x <- make_x(50)
+xb <- make_xb(x, c(1,2))
+y <- sim_ols(u, xb)
+lm(y ~ x[[1]])
+
 }
 \references{
 \href{https://pysal.org/spreg/generated/spreg.dgp.dgp_ols.html#spreg.dgp.dgp_ols}{\code{spreg.dgp.dgp_ols}}

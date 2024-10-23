@@ -4,7 +4,7 @@
 \alias{sim_grid_listw}
 \title{Generate spatial weights matrix for a grid}
 \usage{
-sim_grid_listw(nrow, ncol = ncol, style = "W", type = c("queen", "rook"))
+sim_grid_listw(nrow, ncol = nrow, style = "W", type = c("queen", "rook"))
 }
 \arguments{
 \item{nrow}{the number of rows in the grid.}

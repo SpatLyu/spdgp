@@ -2,12 +2,27 @@
 % Please edit documentation in R/dgp.R
 \name{sim_error}
 \alias{sim_error}
-\title{Simulate Spatial Error Model}
+\title{Simulate Spatial Error Process}
 \usage{
 sim_error(u, listw, lambda = 0.5, model = c("sar", "ma"))
 }
+\arguments{
+\item{u}{an error vector}
+
+\item{lambda}{a value value between -1 and 1. The spatial autoregressive coefficient for the error term.}
+
+\item{model}{default \code{"sar"}. Which model should be simulated. Provide \code{"ma"} for the moving average.}
+}
 \description{
-Simulate Spatial Error Model
+This function generates a pure spatial error process, which is useful when
+you only want to simulate the error structure without including any deterministic
+part (i.e., no xb term). This can be used to analyze or simulate the behavior
+of spatially dependent errors in isolation.
+}
+\examples{
+listw <- sim_grid_listw(5) 
+u <- make_error(25)
+sim_error(u, listw)
 }
 \references{
 See \href{https://pysal.org/spreg/generated/spreg.dgp.dgp_errproc.html#spreg.dgp.dgp_errproc}{\code{spreg.dgp.dgp_errproc}}
