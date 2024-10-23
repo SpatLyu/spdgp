@@ -332,7 +332,7 @@ sim_ols <- function(u, xb) {
   }
   
   # Compute y as the sum of xb and u
-  as.numeric((xb + u)[[1]])
+  xb + u
 }
 
 #' Simulate Spatially Lagged X (SLX) model
@@ -454,6 +454,7 @@ sim_slx_error <- function(u, xb, wxg, lambda = 0.5, model = c("sar", "ma")) {
 #' @param rho the spatial autoregressive coefficient for the spatially lagged dependent variable.
 #' @references [`spreg.dgp.dgp_lag`](https://pysal.org/spreg/generated/spreg.dgp.dgp_lag.html#spreg.dgp.dgp_lag)
 #' @export
+#' @examples
 #' ncol <- 20
 #' n <- ncol^2
 #' listw <- sim_grid_listw(ncol, ncol)  # Create spatial weights for a grid

@@ -16,6 +16,29 @@ sim_sar(u, xb, listw, rho = 0.5)
 \description{
 Simulate y for a SAR model.
 }
+\examples{
+ncol <- 20
+n <- ncol^2
+listw <- sim_grid_listw(ncol, ncol)  # Create spatial weights for a grid
+u <- make_error(n)  # Simulate random errors
+x <- make_x(
+  n,
+  mu = c(0.25, 5),
+  var = c(1, 0.75),
+  method = "normal"
+)  # Generate x variables
+
+# create xb with intercept = 1, beta1 = 2, beta2 = -3
+xb <- make_xb(x, c(1, 2, -3))
+y <- sim_sar(u, xb, listw)
+
+# combine data 
+df <- cbind(y = y, x)
+
+# fit SAR model
+# Note lambda, x_1, and x_2 estimates.
+spatialreg::stsls(y ~ ., df, listw)
+}
 \references{
 \href{https://pysal.org/spreg/generated/spreg.dgp.dgp_lag.html#spreg.dgp.dgp_lag}{\code{spreg.dgp.dgp_lag}}
 }
