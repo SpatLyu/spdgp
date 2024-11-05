@@ -4,7 +4,7 @@
 \alias{sim_slx_error}
 \title{Simulate Spatially Lagged X Error Model}
 \usage{
-sim_slx_error(u, xb, wxg, lambda = 0.5, model = c("sar", "ma"))
+sim_slx_error(u, xb, wxg, listw, lambda = 0.5, model = c("sar", "ma"))
 }
 \arguments{
 \item{u}{an error vector}
