@@ -57,10 +57,10 @@ make_error <- function(
   method <- match.arg(method, method, FALSE)
   switch(
     method, 
-    "normal" = rnorm(n, mu, sqrt(var)),
+    "normal" = stats::rnorm(n, mu, sqrt(var)),
     "laplace" = smoothmest::rdoublex(n, mu, sqrt(var / 2)),
-    "cauchy" = rcauchy(n),
-    "lognormal" = rlnorm(n, mu, sqrt(var)),
+    "cauchy" = stats::rcauchy(n),
+    "lognormal" = stats::rlnorm(n, mu, sqrt(var)),
     stop("method not supported")
   )
 }
@@ -72,14 +72,14 @@ make_error <- function(
 make_x_bivariate <- function(n = 5, mu = 1, cor = 0.25, var = c(1, 1)) {
   # check the length of mu
   if (!length(mu) %in% 1:2) {
-    cli:::cli_abort("Bivariate normal data requires 2 values of {.arg mu}")
+    cli::cli_abort("Bivariate normal data requires 2 values of {.arg mu}")
   } 
   if (rlang::is_scalar_atomic(mu)) {
     mu <- rep(mu, 2)
   } 
 
   if (!length(var) %in% 1:2) {
-    cli:::cli_abort("Bivariate normal data requires 2 values of {.arg var}")
+    cli::cli_abort("Bivariate normal data requires 2 values of {.arg var}")
   }
   
   if (rlang::is_scalar_atomic(var)) {
@@ -102,7 +102,7 @@ make_x_bivariate <- function(n = 5, mu = 1, cor = 0.25, var = c(1, 1)) {
 make_x_uniform <- function(n = 5, var = 1) {
   check_number_decimal(var)
   check_number_whole(n)
-  runif(n, 0, sqrt(12 * var))
+  stats::runif(n, 0, sqrt(12 * var))
 }
 
 #' @rdname make_x
@@ -111,7 +111,7 @@ make_x_normal <- function(n = 5, mu = 0, var = 1) {
   check_number_decimal(var)
   check_number_whole(n)
   check_number_decimal(mu)
-  rnorm(n, mu, var)
+  stats::rnorm(n, mu, var)
 }
 
 #' Simulate X variables
@@ -263,7 +263,7 @@ make_wxg <- function(wx, gamma) {
 
 # calculate the inverse product 
 inverse_prod <- function(listw, x, scalar) {
-  w <- as(listw, "CsparseMatrix")
+  w <- methods::as(listw, "CsparseMatrix")
   n <- vctrs::vec_size(x)
   Matrix::solve(Matrix::Diagonal(n) - scalar * w, as.matrix(x))
 }
@@ -426,7 +426,7 @@ sim_sem <- function(u, xb, listw, lambda = 0.5, model = c("sar", "ma")) {
 #' @export
 #' @inheritParams sim_sem
 #' @inheritParams sim_slx
-sim_slx_error <- function(u, xb, wxg, lambda = 0.5, model = c("sar", "ma")) {
+sim_slx_error <- function(u, xb, wxg, listw, lambda = 0.5, model = c("sar", "ma")) {
   n_lw <- length(listw$neighbours)
   n_u <- vctrs::vec_size(u)
   n_xb <- vctrs::vec_size(xb)
@@ -493,6 +493,7 @@ sim_sar <- function(u, xb, listw, rho = 0.5) {
 #' 
 #' @references [`spreg.dgp.dgp_spdurbin`](https://pysal.org/spreg/generated/spreg.dgp.dgp_spdurbin.html#spreg.dgp.dgp_spdurbin)
 #' @export
+#' @examples
 #' ncol <- 20
 #' n <- ncol^2
 #' listw <- sim_grid_listw(ncol, ncol)  # Create spatial weights for a grid
@@ -606,7 +607,7 @@ sim_mess <- function(u, xb, listw, rho = 0.5) {
   check_number_decimal(rho)
   
   alpha <- log(1 - rho)
-  w <- as(listw, "CsparseMatrix")
+  w <- methods::as(listw, "CsparseMatrix")
   aw <- w * alpha * -1
   xbu <- xb + u
   as.numeric(Matrix::expm(aw) %*% xbu)

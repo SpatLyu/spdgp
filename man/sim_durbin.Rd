@@ -9,6 +9,30 @@ sim_durbin(u, xb, wxg, listw, rho = 0.5)
 \description{
 Simulate the Spatial Durbin Model
 }
+\examples{
+ncol <- 20
+n <- ncol^2
+listw <- sim_grid_listw(ncol, ncol)  # Create spatial weights for a grid
+u <- make_error(n)  # Simulate random errors
+x <- make_x(
+  n,
+  mu = c(0.25, 5),
+  var = c(1, 0.75),
+  method = "normal"
+)  # Generate x variables
+
+# create xb with intercept = 1, beta1 = 2, beta2 = -3
+xb <- make_xb(x, c(1, 2, -3))
+wx <- make_wx(x, listw)
+wxg <- make_wxg(wx, c(-2, 1.5))
+y <- sim_durbin(u, xb, wxg, listw, rho = 0.5)
+
+# combine data 
+df <- cbind(y = y, x)
+
+# fit SDM
+spatialreg::lagsarlm(y ~ ., df, listw, Durbin = TRUE)
+}
 \references{
 \href{https://pysal.org/spreg/generated/spreg.dgp.dgp_spdurbin.html#spreg.dgp.dgp_spdurbin}{\code{spreg.dgp.dgp_spdurbin}}
 }
