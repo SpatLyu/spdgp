@@ -307,7 +307,7 @@ sim_error <- function(u, listw, lambda = 0.5, model = c("sar", "ma")) {
   } else {
     stop("Error: unsupported model type")
   }
-  as.vector(y)
+  as.numeric(y)
 }
 
 
@@ -443,7 +443,7 @@ sim_slx_error <- function(u, xb, wxg, listw, lambda = 0.5, model = c("sar", "ma"
     "sar" = inverse_prod(listw, u, lambda),
     "ma" = u + lambda * spdep::lag.listw(listw, u)
   )
-  xb + wxg + u1
+  as.numeric(xb + wxg + u1)
 }
 
 #' Simulate Spatial Lag Model (SAR)
@@ -558,8 +558,7 @@ sim_sarar <- function(u, xb, listw, rho = 0.5, lambda = 0.2, model = c("sar", "m
   )
 
   y1 <- xb + u1
-  inverse_prod(listw, y1, rho)
-
+  as.numeric(inverse_prod(listw, y1, rho))
 }
 
 
@@ -589,7 +588,7 @@ sim_gns <- function(u, xb, wxg, listw, rho = 0.5, lambda = 0.2, model = c("sar",
   )
 
   y1 <- xb + wxg + u1 
-  inverse_prod(listw, y1, rho)
+  as.numeric(inverse_prod(listw, y1, rho))
 }
 
 #' Simiulate Matrix Exponential Spatial Lag Model
