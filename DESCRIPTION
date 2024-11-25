@@ -1,9 +1,17 @@
 Package: spdgp
 Title: Simulate Spatial Data Generation Processes
 Version: 0.0.0.9000
-Authors@R: 
-    person("Josiah", "Parry", , "josiah.parry@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0001-9910-865X"))
+Authors@R: c(
+      person(given = "Josiah", family = "Parry", role = c("aut", "cre"),
+             email = "josiah.parry@gmail.com", 
+             comment = c(ORCID = "0000-0001-9910-865X")),
+      person(given = "Wenbo", family = "Lv", role = "ctb",
+             email = "lyu.geosocial@gmail.com", 
+             comment = c(ORCID = "0009-0002-6003-3800")),
+      person(given = "Edzer", family = "Pebesma", role = "ctb",
+             email = "edzer.pebesma@uni-muenster.de",
+             comment = c(ORCID = "0000-0001-8049-7069"))
+      )
 Description: Similate data generation processes for common spatial regression models. 
 License: MIT + file LICENSE
 Encoding: UTF-8
