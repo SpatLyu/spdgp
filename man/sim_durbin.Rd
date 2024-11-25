@@ -17,6 +17,9 @@ sim_durbin(u, xb, wxg, listw, rho = 0.5)
 
 \item{rho}{the spatial autoregressive coefficient for the spatially lagged dependent variable.}
 }
+\value{
+A numeric vector
+}
 \description{
 Simulate the Spatial Durbin Model
 }

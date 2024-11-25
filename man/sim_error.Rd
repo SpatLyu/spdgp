@@ -15,6 +15,9 @@ sim_error(u, listw, lambda = 0.5, model = c("sar", "ma"))
 
 \item{model}{default \code{"sar"}. Which model should be simulated. Provide \code{"ma"} for the moving average.}
 }
+\value{
+A numeric vector
+}
 \description{
 This function generates a pure spatial error process, which is useful when
 you only want to simulate the error structure without including any deterministic

@@ -11,6 +11,9 @@ sim_ols(u, xb)
 
 \item{xb}{predicted x values as calculated by \code{make_xb()}}
 }
+\value{
+A numeric vector
+}
 \description{
 Simulate a y variable for an Ordinary Least Squares (OLS) regression.
 }
@@ -20,7 +23,6 @@ x <- make_x(50)
 xb <- make_xb(x, c(1,2))
 y <- sim_ols(u, xb)
 lm(y ~ x[[1]])
-
 }
 \references{
 \href{https://pysal.org/spreg/generated/spreg.dgp.dgp_ols.html#spreg.dgp.dgp_ols}{\code{spreg.dgp.dgp_ols}}

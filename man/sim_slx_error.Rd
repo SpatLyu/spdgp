@@ -19,6 +19,9 @@ sim_slx_error(u, xb, wxg, listw, lambda = 0.5, model = c("sar", "ma"))
 
 \item{model}{default \code{"sar"}. Which model should be simulated. Provide \code{"ma"} for the moving average.}
 }
+\value{
+A numeric vector
+}
 \description{
 Simulate Spatially Lagged X Error Model
 }

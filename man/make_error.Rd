@@ -21,6 +21,9 @@ make_error(
 
 \item{method}{must be one of \code{"normal"}, \code{"laplace"}, \code{"cauchy"}, or \code{"lognormal"}.}
 }
+\value{
+A numeric vector
+}
 \description{
 Simulate an error term
 }

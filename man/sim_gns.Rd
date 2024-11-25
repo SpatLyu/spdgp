@@ -21,6 +21,9 @@ sim_gns(u, xb, wxg, listw, rho = 0.5, lambda = 0.2, model = c("sar", "ma"))
 
 \item{model}{default \code{"sar"}. Which model should be simulated. Provide \code{"ma"} for the moving average.}
 }
+\value{
+A numeric vector
+}
 \description{
 Simulate General Nested Model
 }

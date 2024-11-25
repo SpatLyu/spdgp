@@ -19,6 +19,9 @@ sim_sarar(u, xb, listw, rho = 0.5, lambda = 0.2, model = c("sar", "ma"))
 
 \item{model}{default \code{"sar"}. Which model should be simulated. Provide \code{"ma"} for the moving average.}
 }
+\value{
+A numeric vector
+}
 \description{
 Generate \code{y} values for the "combo" / SARAR / SAC model.
 }

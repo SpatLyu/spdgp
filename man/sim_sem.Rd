@@ -17,6 +17,9 @@ sim_sem(u, xb, listw, lambda = 0.5, model = c("sar", "ma"))
 
 \item{model}{default \code{"sar"}. Which model should be simulated. Provide \code{"ma"} for the moving average.}
 }
+\value{
+A numeric vector
+}
 \description{
 Simulate the y values for an SEM model.
 }

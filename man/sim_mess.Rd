@@ -15,6 +15,9 @@ sim_mess(u, xb, listw, rho = 0.5)
 
 \item{rho}{the spatial autoregressive coefficient for the spatially lagged dependent variable.}
 }
+\value{
+A numeric vector
+}
 \description{
 Simiulate Matrix Exponential Spatial Lag Model
 }
