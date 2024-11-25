@@ -11,6 +11,8 @@ sim_sem(u, xb, listw, lambda = 0.5, model = c("sar", "ma"))
 
 \item{xb}{predicted x values as calculated by \code{make_xb()}}
 
+\item{listw}{a \code{listw} object generated with \code{sim_grid_listw()}.}
+
 \item{lambda}{a value value between -1 and 1. The spatial autoregressive coefficient for the error term.}
 
 \item{model}{default \code{"sar"}. Which model should be simulated. Provide \code{"ma"} for the moving average.}

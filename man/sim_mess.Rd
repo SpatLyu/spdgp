@@ -6,6 +6,15 @@
 \usage{
 sim_mess(u, xb, listw, rho = 0.5)
 }
+\arguments{
+\item{u}{an error vector}
+
+\item{xb}{predicted x values as calculated by \code{make_xb()}}
+
+\item{listw}{a \code{listw} object generated with \code{sim_grid_listw()}.}
+
+\item{rho}{the spatial autoregressive coefficient for the spatially lagged dependent variable.}
+}
 \description{
 Simiulate Matrix Exponential Spatial Lag Model
 }

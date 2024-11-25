@@ -34,9 +34,10 @@ make_square_grid <- function(nrow, ncol = nrow) {
 
 #' Simulate an error term
 #' 
-#' @param n the number of values to simulate
+#' @param n the number of values to simulate.
 #' @param mu the sample average.
-#' @param var the sample variance. The `sqrt(var)` is passed to `rnorm()` and `rlnorm()` for normal and laplace distributions. `sqrt(var / 2)` is used for `laplace()`
+#' @param var the sample variance. The `sqrt(var)` is passed to `rnorm()` and `rlnorm()` for normal and laplace distributions. 
+#' `sqrt(var / 2)` is used for `laplace()` .
 #' @param method must be one of `"normal"`, `"laplace"`, `"cauchy"`, or `"lognormal"`.
 #' 
 #' @details
@@ -118,7 +119,10 @@ make_x_normal <- function(n = 5, mu = 0, var = 1) {
 #' 
 #' Simulates independent variables. 
 #' 
-#' @param method must be one of `"uniform"` (default), `"normal"`, or `"bivnormal"` (bivariate normal)
+#' @returns 
+#' A `data.frame` of the simulated independent variables.
+#' 
+#' @param method must be one of `"uniform"` (default), `"normal"`, or `"bivnormal"` (bivariate normal).
 #' @rdname make_x
 #' @export
 #' @examples
@@ -172,9 +176,10 @@ make_x <- function(n = 5, mu = 0, var = 1, cor = 0, method = c("uniform", "norma
 #' Given a dataframe of numeric values and a spatial weights matrix, calculate the spatial lag of each variable.
 #' 
 #' @returns 
-#' 
 #' A `data.frame` of the spatially lagged variables.
 #' 
+#' @param x a `data.frame` of independent variables generated with `make_x()`.
+#' @param listw a `listw` object generated with `sim_grid_listw()`.
 #' @param order unused. 
 #' @export
 #' @examples
@@ -194,18 +199,18 @@ make_wx <- function(x, listw, order = NULL) {
 #' This function calculates predicted x values based on regression coefficients.
 #' The results of this function can be passed to other `sim_*()` functions. 
 #' 
-#' @param x a data frame of x variables generated with `make_x()`
-#' @param beta a vector of the beta coefficients for each of the variables. There must be `ncol(x) + 1` values. The first element of the vector is the intercept.
+#' @param x a `data.frame` of independent variables generated with `make_x()`.
+#' @param beta a vector of the beta coefficients for each of the variables. There must be 
+#' `ncol(x) + 1` values. The first element of the vector is the intercept.
 #' 
+#' @export
 #' @examples
 #' grid <- make_square_grid(5)
 #' listw <- sim_grid_listw(5, 5)
 #' n <- 25
 #' x <- make_x(25, c(0,1), c(1,4))
-#' 
 #' betas <- c(1, 1.5, -2)
 #' make_xb(x, betas)
-#' @export
 make_xb <- function(x, beta) {
   n <- nrow(x)
   k <- ncol(x)
@@ -234,6 +239,7 @@ make_xb <- function(x, beta) {
 #' @param wx a matrix of spatially lagged x variables.
 #' @param gamma a vector of coefficients for the spatially lagged x variables. Its length must match the number of columns in wx.
 #' 
+#' @export
 #' @examples
 #' grid <- make_square_grid(5)
 #' listw <- spdep::nb2listw(spdep::poly2nb(grid))
@@ -242,7 +248,6 @@ make_xb <- function(x, beta) {
 #' wx <- make_wx(x, listw)
 #' gamma <- c(1.75, 0.4)
 #' make_wxg(wx, gamma) 
-#' @export
 make_wxg <- function(wx, gamma) {
   wx <- as.matrix(wx)  # Convert wx to a matrix
   k <- ncol(wx)
@@ -451,6 +456,7 @@ sim_slx_error <- function(u, xb, wxg, listw, lambda = 0.5, model = c("sar", "ma"
 #' Simulate y for a SAR model. 
 #' 
 #' @inheritParams sim_slx
+#' @param listw a `listw` object generated with `sim_grid_listw()`.
 #' @param rho the spatial autoregressive coefficient for the spatially lagged dependent variable.
 #' @references [`spreg.dgp.dgp_lag`](https://pysal.org/spreg/generated/spreg.dgp.dgp_lag.html#spreg.dgp.dgp_lag)
 #' @export
@@ -491,6 +497,8 @@ sim_sar <- function(u, xb, listw, rho = 0.5) {
 
 #' Simulate the Spatial Durbin Model
 #' 
+#' @inheritParams sim_slx
+#' @inheritParams sim_sar
 #' @references [`spreg.dgp.dgp_spdurbin`](https://pysal.org/spreg/generated/spreg.dgp.dgp_spdurbin.html#spreg.dgp.dgp_spdurbin)
 #' @export
 #' @examples
@@ -533,10 +541,11 @@ sim_durbin <- function(u, xb, wxg, listw, rho = 0.5) {
 #' Simulate the Spatial Autoregressive Model with Autoregressive Errors 
 #' 
 #' Generate `y` values for the "combo" / SARAR / SAC model. 
-#' @references [`spreg.dgp.dgp_lagerr`](https://pysal.org/spreg/generated/spreg.dgp.dgp_lagerr.html#spreg.dgp.dgp_lagerr)
-#' @export
+#' 
 #' @inheritParams sim_sem
 #' @inheritParams sim_sar
+#' @references [`spreg.dgp.dgp_lagerr`](https://pysal.org/spreg/generated/spreg.dgp.dgp_lagerr.html#spreg.dgp.dgp_lagerr)
+#' @export
 sim_sarar <- function(u, xb, listw, rho = 0.5, lambda = 0.2, model = c("sar", "ma")) {
   n_lw <- length(listw$neighbours)
   n_u <- vctrs::vec_size(u)
@@ -564,6 +573,9 @@ sim_sarar <- function(u, xb, listw, rho = 0.5, lambda = 0.2, model = c("sar", "m
 
 #' Simulate General Nested Model
 #' 
+#' @inheritParams sim_slx
+#' @inheritParams sim_sar
+#' @inheritParams sim_error
 #' @references [`spreg.dgp.dgp_gns`](https://pysal.org/spreg/generated/spreg.dgp.dgp_gns.html#spreg.dgp.dgp_gns)
 #' @export
 sim_gns <- function(u, xb, wxg, listw, rho = 0.5, lambda = 0.2, model = c("sar", "ma")) {
@@ -592,7 +604,8 @@ sim_gns <- function(u, xb, wxg, listw, rho = 0.5, lambda = 0.2, model = c("sar",
 }
 
 #' Simiulate Matrix Exponential Spatial Lag Model
-#' @importFrom spatialreg as_dgRMatrix_listw 
+#' @importFrom spatialreg as_dgRMatrix_listw
+#' @inheritParams sim_sar
 #' @export
 #' @references [`dgp_mess`](https://pysal.org/spreg/_modules/spreg/dgp.html#dgp_mess)
 sim_mess <- function(u, xb, listw, rho = 0.5) {

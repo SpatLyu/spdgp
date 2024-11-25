@@ -11,6 +11,8 @@ sim_sarar(u, xb, listw, rho = 0.5, lambda = 0.2, model = c("sar", "ma"))
 
 \item{xb}{predicted x values as calculated by \code{make_xb()}}
 
+\item{listw}{a \code{listw} object generated with \code{sim_grid_listw()}.}
+
 \item{rho}{the spatial autoregressive coefficient for the spatially lagged dependent variable.}
 
 \item{lambda}{a value value between -1 and 1. The spatial autoregressive coefficient for the error term.}

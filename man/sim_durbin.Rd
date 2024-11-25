@@ -6,6 +6,17 @@
 \usage{
 sim_durbin(u, xb, wxg, listw, rho = 0.5)
 }
+\arguments{
+\item{u}{an error vector}
+
+\item{xb}{predicted x values as calculated by \code{make_xb()}}
+
+\item{wxg}{predicted spatial lag effect as calculated by \code{make_wxg()}}
+
+\item{listw}{a \code{listw} object generated with \code{sim_grid_listw()}.}
+
+\item{rho}{the spatial autoregressive coefficient for the spatially lagged dependent variable.}
+}
 \description{
 Simulate the Spatial Durbin Model
 }
