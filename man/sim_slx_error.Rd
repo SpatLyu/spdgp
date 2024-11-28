@@ -13,9 +13,14 @@ sim_slx_error(u, xb, wxg, listw, lambda = 0.5, model = c("sar", "ma"))
 
 \item{wxg}{predicted spatial lag effect as calculated by \code{make_wxg()}}
 
+\item{listw}{a \code{listw} object generated with \code{sim_grid_listw()}.}
+
 \item{lambda}{a value value between -1 and 1. The spatial autoregressive coefficient for the error term.}
 
 \item{model}{default \code{"sar"}. Which model should be simulated. Provide \code{"ma"} for the moving average.}
+}
+\value{
+A numeric vector
 }
 \description{
 Simulate Spatially Lagged X Error Model

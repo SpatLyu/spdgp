@@ -11,6 +11,9 @@ make_wxg(wx, gamma)
 
 \item{gamma}{a vector of coefficients for the spatially lagged x variables. Its length must match the number of columns in wx.}
 }
+\value{
+A numeric vector
+}
 \description{
 This function computes the contribution of spatially lagged X variables based on
 provided coefficients. The function takes the spatially lagged variables (\code{wx}, see \code{\link[=make_wx]{make_wx()}})
@@ -21,7 +24,6 @@ the original X variables are not included in this calculation.
 \examples{
 grid <- make_square_grid(5)
 listw <- spdep::nb2listw(spdep::poly2nb(grid))
-n <- 25
 x <- make_x(25, c(0,1), c(1,4))
 wx <- make_wx(x, listw)
 gamma <- c(1.75, 0.4)

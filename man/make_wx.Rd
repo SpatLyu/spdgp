@@ -7,6 +7,10 @@
 make_wx(x, listw, order = NULL)
 }
 \arguments{
+\item{x}{a \code{data.frame} of independent variables generated with \code{make_x()}.}
+
+\item{listw}{a \code{listw} object generated with \code{sim_grid_listw()}.}
+
 \item{order}{unused.}
 }
 \value{

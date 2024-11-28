@@ -7,20 +7,20 @@
 make_xb(x, beta)
 }
 \arguments{
-\item{x}{a data frame of x variables generated with \code{make_x()}}
+\item{x}{a \code{data.frame} of independent variables generated with \code{make_x()}.}
 
-\item{beta}{a vector of the beta coefficients for each of the variables. There must be \code{ncol(x) + 1} values. The first element of the vector is the intercept.}
+\item{beta}{a vector of the beta coefficients for each of the variables. There must be
+\code{ncol(x) + 1} values. The first element of the vector is the intercept.}
+}
+\value{
+A numeric vector
 }
 \description{
 This function calculates predicted x values based on regression coefficients.
 The results of this function can be passed to other \verb{sim_*()} functions.
 }
 \examples{
-grid <- make_square_grid(5)
-listw <- sim_grid_listw(5, 5)
-n <- 25
 x <- make_x(25, c(0,1), c(1,4))
-
 betas <- c(1, 1.5, -2)
 make_xb(x, betas)
 }

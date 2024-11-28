@@ -11,7 +11,12 @@ sim_sar(u, xb, listw, rho = 0.5)
 
 \item{xb}{predicted x values as calculated by \code{make_xb()}}
 
+\item{listw}{a \code{listw} object generated with \code{sim_grid_listw()}.}
+
 \item{rho}{the spatial autoregressive coefficient for the spatially lagged dependent variable.}
+}
+\value{
+A numeric vector
 }
 \description{
 Simulate y for a SAR model.

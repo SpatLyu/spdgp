@@ -12,13 +12,17 @@ make_error(
 )
 }
 \arguments{
-\item{n}{the number of values to simulate}
+\item{n}{the number of values to simulate.}
 
 \item{mu}{the sample average.}
 
-\item{var}{the sample variance. The \code{sqrt(var)} is passed to \code{rnorm()} and \code{rlnorm()} for normal and laplace distributions. \code{sqrt(var / 2)} is used for \code{laplace()}}
+\item{var}{the sample variance. The \code{sqrt(var)} is passed to \code{rnorm()} and \code{rlnorm()} for normal and laplace distributions.
+\code{sqrt(var / 2)} is used for \code{laplace()} .}
 
 \item{method}{must be one of \code{"normal"}, \code{"laplace"}, \code{"cauchy"}, or \code{"lognormal"}.}
+}
+\value{
+A numeric vector
 }
 \description{
 Simulate an error term

@@ -22,15 +22,19 @@ make_x(
 )
 }
 \arguments{
-\item{n}{the number of values to simulate}
+\item{n}{the number of values to simulate.}
 
 \item{mu}{the sample average.}
 
 \item{cor}{correlation between bivariate normal}
 
-\item{var}{the sample variance. The \code{sqrt(var)} is passed to \code{rnorm()} and \code{rlnorm()} for normal and laplace distributions. \code{sqrt(var / 2)} is used for \code{laplace()}}
+\item{var}{the sample variance. The \code{sqrt(var)} is passed to \code{rnorm()} and \code{rlnorm()} for normal and laplace distributions.
+\code{sqrt(var / 2)} is used for \code{laplace()} .}
 
-\item{method}{must be one of \code{"uniform"} (default), \code{"normal"}, or \code{"bivnormal"} (bivariate normal)}
+\item{method}{must be one of \code{"uniform"} (default), \code{"normal"}, or \code{"bivnormal"} (bivariate normal).}
+}
+\value{
+A \code{data.frame} of the simulated independent variables.
 }
 \description{
 Simulates independent variables.

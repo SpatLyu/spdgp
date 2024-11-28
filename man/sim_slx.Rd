@@ -13,6 +13,9 @@ sim_slx(u, xb, wxg)
 
 \item{wxg}{predicted spatial lag effect as calculated by \code{make_wxg()}}
 }
+\value{
+A numeric vector
+}
 \description{
 This function simulates the y values of an SLX model, where the dependent
 variable is influenced by both the original and spatially lagged x variables.
