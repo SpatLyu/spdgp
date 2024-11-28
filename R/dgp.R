@@ -6,7 +6,7 @@
 #' @param ncol defaults to `nrow`. The number columns in the grid.
 #' @param style the spatial weights style. Defaults to row standardized. See [spdep::nb2listw()] for more.
 #' @param type default `"queen"`. Can also be `"rook"`.
-#' @return A `listw` object by `spdep` package
+#' @return A `listw` object by `spdep` package.
 #' @export
 #' @examples
 #' sim_grid_listw(10, 5)
