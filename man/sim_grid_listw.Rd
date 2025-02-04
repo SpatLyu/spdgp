@@ -16,7 +16,7 @@ sim_grid_listw(nrow, ncol = nrow, style = "W", type = c("queen", "rook"))
 \item{type}{default \code{"queen"}. Can also be \code{"rook"}.}
 }
 \value{
-A \code{listw} object by \code{spdep} package
+A \code{listw} object by \code{spdep} package.
 }
 \description{
 Create a spatial weights matrix based on a square grid structure.
