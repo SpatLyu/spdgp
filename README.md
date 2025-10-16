@@ -1,4 +1,19 @@
-# Spatial Data Generation Processes
+
+
+# spdgp
+
+<!-- badges: start -->
+
+[![CRAN](https://www.r-pkg.org/badges/version/spdgp.png)](https://CRAN.R-project.org/package=spdgp)
+[![CRAN
+Release](https://www.r-pkg.org/badges/last-release/spdgp.png)](https://CRAN.R-project.org/package=spdgp)
+[![Lifecycle:
+stable](https://img.shields.io/badge/lifecycle-stable-20b2aa.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![R-CMD-check](https://github.com/JosiahParry/spdgp/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/JosiahParry/spdgp/actions/workflows/R-CMD-check.yaml)
+
+<!-- badges: end -->
+
+*Spatial Data Generation Processes*
 
 `{spdgp}` is an R port of the [`pysal`](https://pysal.org/) module
 [`dgp`](https://pysal.org/spreg/api.html#dgp) within
@@ -25,7 +40,14 @@ Use `spdgp` to generate data for the following models:
 
 ## Installation
 
-`spdgp` can be installed from github using:
+- Install from [CRAN](https://CRAN.R-project.org/package=spdgp) with:
+
+``` r
+install.packages("spdgp")
+```
+
+- Install from source code on
+  [GitHub](https://github.com/JosiahParry/spdgp) with:
 
 ``` r
 if (!requireNamespace("pak")) {
@@ -42,6 +64,8 @@ of:
 
 ``` r
 library(spdgp)
+
+set.seed(42)
 
 n <- 50
 listw <- sim_grid_listw(10, 5)
@@ -83,26 +107,26 @@ summary(sar_mod)
     #> 
     #> Residuals:
     #>       Min        1Q    Median        3Q       Max 
-    #> -3.100635 -0.377549  0.042234  0.703459  2.810884 
+    #> -2.531747 -0.611036 -0.043396  0.739112  2.200584 
     #> 
     #> Type: lag 
     #> Coefficients: (asymptotic standard errors) 
     #>             Estimate Std. Error z value Pr(>|z|)
-    #> (Intercept)  0.49641    0.97505  0.5091   0.6107
-    #> x$x_1        4.98587    0.19082 26.1281   <2e-16
+    #> (Intercept)  0.86583    1.30543  0.6632   0.5072
+    #> x$x_1        5.13379    0.16814 30.5326   <2e-16
     #> 
-    #> Rho: 0.52947, LR test value: 54.755, p-value: 1.3656e-13
-    #> Asymptotic standard error: 0.050408
-    #>     z-value: 10.504, p-value: < 2.22e-16
-    #> Wald statistic: 110.33, p-value: < 2.22e-16
+    #> Rho: 0.49234, LR test value: 38.315, p-value: 6.0202e-10
+    #> Asymptotic standard error: 0.059849
+    #>     z-value: 8.2265, p-value: 2.2204e-16
+    #> Wald statistic: 67.675, p-value: 2.2204e-16
     #> 
-    #> Log likelihood: -83.83562 for lag model
-    #> ML residual variance (sigma squared): 1.5825, (sigma: 1.258)
+    #> Log likelihood: -78.41619 for lag model
+    #> ML residual variance (sigma squared): 1.2853, (sigma: 1.1337)
     #> Number of observations: 50 
     #> Number of parameters estimated: 4 
-    #> AIC: 175.67, (AIC for lm: 228.43)
+    #> AIC: 164.83, (AIC for lm: 201.15)
     #> LM test for residual autocorrelation
-    #> test value: 1.8893, p-value: 0.16928
+    #> test value: 0.11376, p-value: 0.7359
 
 In the model we can see that the estimate of `rho` is quite close to the
 specified value of `0.5`.
