@@ -17,7 +17,7 @@ stable](https://img.shields.io/badge/lifecycle-stable-20b2aa.svg)](https://lifec
 
 `{spdgp}` is an R port of the [`pysal`](https://pysal.org/) module
 [`dgp`](https://pysal.org/spreg/api.html#dgp) within
-[`spreg`](https://pysal.org/spreg) library.
+[`spreg`](https://pysal.org/spreg/) library.
 
 `spdgp` is designed around the
 [`spdep`](https://r-spatial.github.io/spdep/) package’s `listw` object
