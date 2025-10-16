@@ -1,5 +1,6 @@
 # Spatial Data Generation Processes
 
+
 `{spdgp}` is an R port of the [`pysal`](https://pysal.org/) module
 [`dgp`](https://pysal.org/spreg/api.html#dgp) within
 [`spreg`](https://pysal.org/spreg) library.
@@ -32,7 +33,7 @@ if (!requireNamespace("pak")) {
     install.packages("pak")
 }
 
-pak::pak("josiahparry/spdgp")
+pak::pak("josiahparry/spgdp")
 ```
 
 ## Basic usage:
@@ -83,26 +84,26 @@ summary(sar_mod)
     #> 
     #> Residuals:
     #>       Min        1Q    Median        3Q       Max 
-    #> -3.100635 -0.377549  0.042234  0.703459  2.810884 
+    #> -1.942681 -0.743755 -0.023597  0.536325  2.789143 
     #> 
     #> Type: lag 
     #> Coefficients: (asymptotic standard errors) 
     #>             Estimate Std. Error z value Pr(>|z|)
-    #> (Intercept)  0.49641    0.97505  0.5091   0.6107
-    #> x$x_1        4.98587    0.19082 26.1281   <2e-16
+    #> (Intercept)  1.77355    0.95190  1.8632  0.06244
+    #> x$x_1        4.98077    0.15108 32.9675  < 2e-16
     #> 
-    #> Rho: 0.52947, LR test value: 54.755, p-value: 1.3656e-13
-    #> Asymptotic standard error: 0.050408
-    #>     z-value: 10.504, p-value: < 2.22e-16
-    #> Wald statistic: 110.33, p-value: < 2.22e-16
+    #> Rho: 0.46379, LR test value: 50.53, p-value: 1.1734e-12
+    #> Asymptotic standard error: 0.050278
+    #>     z-value: 9.2246, p-value: < 2.22e-16
+    #> Wald statistic: 85.094, p-value: < 2.22e-16
     #> 
-    #> Log likelihood: -83.83562 for lag model
-    #> ML residual variance (sigma squared): 1.5825, (sigma: 1.258)
+    #> Log likelihood: -73.77918 for lag model
+    #> ML residual variance (sigma squared): 1.0742, (sigma: 1.0364)
     #> Number of observations: 50 
     #> Number of parameters estimated: 4 
-    #> AIC: 175.67, (AIC for lm: 228.43)
+    #> AIC: 155.56, (AIC for lm: 204.09)
     #> LM test for residual autocorrelation
-    #> test value: 1.8893, p-value: 0.16928
+    #> test value: 0.74855, p-value: 0.38694
 
 In the model we can see that the estimate of `rho` is quite close to the
 specified value of `0.5`.
