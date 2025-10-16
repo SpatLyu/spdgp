@@ -47,6 +47,8 @@ We first need to create a spatial weights matrix to simulate based off of:
 ```{r}
 library(spdgp)
 
+set.seed(42)
+
 n <- 50
 listw <- sim_grid_listw(10, 5)
 ```

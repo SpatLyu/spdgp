@@ -44,6 +44,8 @@ of:
 ``` r
 library(spdgp)
 
+set.seed(42)
+
 n <- 50
 listw <- sim_grid_listw(10, 5)
 ```
@@ -84,26 +86,26 @@ summary(sar_mod)
     #> 
     #> Residuals:
     #>       Min        1Q    Median        3Q       Max 
-    #> -1.942681 -0.743755 -0.023597  0.536325  2.789143 
+    #> -2.531747 -0.611036 -0.043396  0.739112  2.200584 
     #> 
     #> Type: lag 
     #> Coefficients: (asymptotic standard errors) 
     #>             Estimate Std. Error z value Pr(>|z|)
-    #> (Intercept)  1.77355    0.95190  1.8632  0.06244
-    #> x$x_1        4.98077    0.15108 32.9675  < 2e-16
+    #> (Intercept)  0.86583    1.30543  0.6632   0.5072
+    #> x$x_1        5.13379    0.16814 30.5326   <2e-16
     #> 
-    #> Rho: 0.46379, LR test value: 50.53, p-value: 1.1734e-12
-    #> Asymptotic standard error: 0.050278
-    #>     z-value: 9.2246, p-value: < 2.22e-16
-    #> Wald statistic: 85.094, p-value: < 2.22e-16
+    #> Rho: 0.49234, LR test value: 38.315, p-value: 6.0202e-10
+    #> Asymptotic standard error: 0.059849
+    #>     z-value: 8.2265, p-value: 2.2204e-16
+    #> Wald statistic: 67.675, p-value: 2.2204e-16
     #> 
-    #> Log likelihood: -73.77918 for lag model
-    #> ML residual variance (sigma squared): 1.0742, (sigma: 1.0364)
+    #> Log likelihood: -78.41619 for lag model
+    #> ML residual variance (sigma squared): 1.2853, (sigma: 1.1337)
     #> Number of observations: 50 
     #> Number of parameters estimated: 4 
-    #> AIC: 155.56, (AIC for lm: 204.09)
+    #> AIC: 164.83, (AIC for lm: 201.15)
     #> LM test for residual autocorrelation
-    #> test value: 0.74855, p-value: 0.38694
+    #> test value: 0.11376, p-value: 0.7359
 
 In the model we can see that the estimate of `rho` is quite close to the
 specified value of `0.5`.
