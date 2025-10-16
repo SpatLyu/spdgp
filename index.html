@@ -85,7 +85,7 @@
 <span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"josiahparry/spdgp"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"josiahparry/spgdp"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="basic-usage">Basic usage:<a class="anchor" aria-label="anchor" href="#basic-usage"></a>
@@ -122,26 +122,26 @@
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
 <span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt;       Min        1Q    Median        3Q       Max </span></span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt; -3.100635 -0.377549  0.042234  0.703459  2.810884 </span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt; -1.942681 -0.743755 -0.023597  0.536325  2.789143 </span></span>
 <span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt; Type: lag </span></span>
 <span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt; Coefficients: (asymptotic standard errors) </span></span>
 <span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error z value Pr(&gt;|z|)</span></span>
-<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt; (Intercept)  0.49641    0.97505  0.5091   0.6107</span></span>
-<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#&gt; x$x_1        4.98587    0.19082 26.1281   &lt;2e-16</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt; (Intercept)  1.77355    0.95190  1.8632  0.06244</span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#&gt; x$x_1        4.98077    0.15108 32.9675  &lt; 2e-16</span></span>
 <span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co">#&gt; Rho: 0.52947, LR test value: 54.755, p-value: 1.3656e-13</span></span>
-<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#&gt; Asymptotic standard error: 0.050408</span></span>
-<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co">#&gt;     z-value: 10.504, p-value: &lt; 2.22e-16</span></span>
-<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co">#&gt; Wald statistic: 110.33, p-value: &lt; 2.22e-16</span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co">#&gt; Rho: 0.46379, LR test value: 50.53, p-value: 1.1734e-12</span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#&gt; Asymptotic standard error: 0.050278</span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co">#&gt;     z-value: 9.2246, p-value: &lt; 2.22e-16</span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co">#&gt; Wald statistic: 85.094, p-value: &lt; 2.22e-16</span></span>
 <span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a><span class="co">#&gt; Log likelihood: -83.83562 for lag model</span></span>
-<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="co">#&gt; ML residual variance (sigma squared): 1.5825, (sigma: 1.258)</span></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a><span class="co">#&gt; Log likelihood: -73.77918 for lag model</span></span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="co">#&gt; ML residual variance (sigma squared): 1.0742, (sigma: 1.0364)</span></span>
 <span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="co">#&gt; Number of observations: 50 </span></span>
 <span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a><span class="co">#&gt; Number of parameters estimated: 4 </span></span>
-<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a><span class="co">#&gt; AIC: 175.67, (AIC for lm: 228.43)</span></span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a><span class="co">#&gt; AIC: 155.56, (AIC for lm: 204.09)</span></span>
 <span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a><span class="co">#&gt; LM test for residual autocorrelation</span></span>
-<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a><span class="co">#&gt; test value: 1.8893, p-value: 0.16928</span></span></code></pre></div>
+<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a><span class="co">#&gt; test value: 0.74855, p-value: 0.38694</span></span></code></pre></div>
 <p>In the model we can see that the estimate of <code>rho</code> is quite close to the specified value of <code>0.5</code>.</p>
 </div>
 </div>
