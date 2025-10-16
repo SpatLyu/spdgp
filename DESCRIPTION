@@ -12,7 +12,7 @@ Authors@R: c(
              email = "edzer.pebesma@uni-muenster.de",
              comment = c(ORCID = "0000-0001-8049-7069"))
       )
-Description: Similate data generation processes for common spatial regression models. 
+Description: Simulate data generation processes for common spatial regression models. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 Language: en
