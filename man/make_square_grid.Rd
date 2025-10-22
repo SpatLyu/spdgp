@@ -11,6 +11,9 @@ make_square_grid(nrow, ncol = nrow)
 
 \item{ncol}{defaults to \code{nrow}. The number columns in the grid.}
 }
+\value{
+An \code{sfc} object by \code{sf} package.
+}
 \description{
 Creates a square grid with \code{ncol} and \code{nrow} dimensions.
 }
