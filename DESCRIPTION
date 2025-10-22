@@ -12,7 +12,7 @@ Authors@R: c(
              email = "edzer.pebesma@uni-muenster.de",
              comment = c(ORCID = "0000-0001-8049-7069"))
       )
-Description: Provides functionality for simulating data generation processes across various spatial regression models, conceptually aligned with the 'dgp' module of the 'Python' library 'spreg'.
+Description: Provides functionality for simulating data generation processes across various spatial regression models, conceptually aligned with the 'dgp' module of the 'Python' library 'spreg' <https://pysal.org/spreg/api.html#dgp>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Language: en
