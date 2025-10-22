@@ -22,6 +22,7 @@ sim_grid_listw <- function(nrow, ncol = nrow, style = "W", type = c("queen", "ro
 #' Creates a square grid with `ncol` and `nrow` dimensions.
 #' 
 #' @inheritParams sim_grid_listw
+#' @return An `sfc` object by `sf` package.
 #' @export
 #' @examples
 #' make_square_grid(3, 2)
