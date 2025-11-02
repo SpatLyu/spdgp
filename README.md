@@ -4,9 +4,9 @@
 
 <!-- badges: start -->
 
-[![CRAN](https://www.r-pkg.org/badges/version/spdgp.png)](https://CRAN.R-project.org/package=spdgp)
+[![CRAN](https://www.r-pkg.org/badges/version/spdgp)](https://CRAN.R-project.org/package=spdgp)
 [![CRAN
-Release](https://www.r-pkg.org/badges/last-release/spdgp.png)](https://CRAN.R-project.org/package=spdgp)
+Release](https://www.r-pkg.org/badges/last-release/spdgp)](https://CRAN.R-project.org/package=spdgp)
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-stable-20b2aa.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![R-CMD-check](https://github.com/JosiahParry/spdgp/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/JosiahParry/spdgp/actions/workflows/R-CMD-check.yaml)
