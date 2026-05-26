@@ -75,7 +75,7 @@ spatialreg::lagsarlm(y ~ ., df, listw, Durbin = TRUE)
 #> 
 #> Coefficients:
 #>         rho (Intercept)         x_1         x_2     lag.x_1     lag.x_2 
-#>   0.3725901   2.0088068   2.0910376  -2.9380981  -1.6759722   0.8912779 
+#>   0.3725901   2.0088068   2.0910376  -2.9380981  -1.6759722   0.8912780 
 #> 
 #> Log likelihood: -581.025 
 ```

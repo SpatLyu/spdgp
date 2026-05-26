@@ -73,7 +73,7 @@ spatialreg::errorsarlm(y ~ ., df, listw)
 #> 
 #> Coefficients:
 #>      lambda (Intercept)         x_1         x_2 
-#>   0.4207723  -0.7156727   2.1358333  -2.6173289 
+#>   0.4207722  -0.7156728   2.1358333  -2.6173289 
 #> 
 #> Log likelihood: -143.7965 
 ```
