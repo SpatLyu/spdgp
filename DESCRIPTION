@@ -1,17 +1,17 @@
 Package: spdgp
 Title: Simulate Spatial Data Generation Processes
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: c(
-      person(given = "Josiah", family = "Parry", role = c("aut"),
-             email = "josiah.parry@gmail.com", 
-             comment = c(ORCID = "0000-0001-9910-865X")),
-      person(given = "Wenbo", family = "Lv", role = c("aut", "cre"),
-             email = "lyu.geosocial@gmail.com", 
-             comment = c(ORCID = "0009-0002-6003-3800")),
-      person(given = "Edzer", family = "Pebesma", role = "ctb",
-             email = "edzer.pebesma@uni-muenster.de",
-             comment = c(ORCID = "0000-0001-8049-7069"))
-      )
+       person(given = "Wenbo", family = "Lyu", role = c("aut", "cre"),
+              email = "lyu.geosocial@gmail.com", 
+              comment = c(ORCID = "0009-0002-6003-3800")),
+       person(given = "Josiah", family = "Parry", role = c("aut"),
+              email = "josiah.parry@gmail.com", 
+              comment = c(ORCID = "0000-0001-9910-865X")),
+       person(given = "Edzer", family = "Pebesma", role = "ctb",
+              email = "edzer.pebesma@uni-muenster.de",
+              comment = c(ORCID = "0000-0001-8049-7069"))
+       )
 Description: Provides functionality for simulating data generation processes across various spatial regression models, conceptually aligned with the 'dgp' module of the 'Python' library 'spreg' <https://pysal.org/spreg/api.html#dgp>.
 License: MIT + file LICENSE
 Encoding: UTF-8
